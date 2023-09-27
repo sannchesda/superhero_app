@@ -208,22 +208,22 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
             buildProgressBar(
               title: "💨 Speed",
               progressValue:
-                  superhero.powerstats?.intelligence?.toDouble() ?? 0.0,
+                  superhero.powerstats?.speed?.toDouble() ?? 0.0,
             ),
             buildProgressBar(
               title: "🧱 Durability",
               progressValue:
-                  superhero.powerstats?.intelligence?.toDouble() ?? 0.0,
+                  superhero.powerstats?.durability?.toDouble() ?? 0.0,
             ),
             buildProgressBar(
               title: "⚡ Power",
               progressValue:
-                  superhero.powerstats?.intelligence?.toDouble() ?? 0.0,
+                  superhero.powerstats?.power?.toDouble() ?? 0.0,
             ),
             buildProgressBar(
               title: "👊 Combat",
               progressValue:
-                  superhero.powerstats?.intelligence?.toDouble() ?? 0.0,
+                  superhero.powerstats?.combat?.toDouble() ?? 0.0,
             ),
           ],
         ),
