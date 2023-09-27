@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:superhero_app/models/success_response.dart';
 import 'package:superhero_app/utils/functions.dart';
 
 Future<dynamic> callingApiMethod({
@@ -17,7 +17,7 @@ Future<dynamic> callingApiMethod({
 }) async {
   String baseUrl = dotenv.env["BASE_URL"] ?? "";
 
-  final uri = Uri.parse("$baseUrl$url");
+  final uri = Uri.parse("$baseUrl/$url");
 
   final Map<String, String> headers = {
     "Accept": "application/json",
@@ -90,13 +90,7 @@ Future<dynamic> callingApiMethod({
 dynamic processResponse(http.Response response, {bool showError = true}) {
   try {
     if (response.statusCode == 200) {
-      final defaultResponse = successResponseFromJson(response.body);
-
-      if (defaultResponse.statusCode != 200) {
-        processError(defaultResponse.errorString(), showError: showError);
-        return;
-      }
-      return defaultResponse;
+      return response;
     }
     processError(response, showError: showError);
 

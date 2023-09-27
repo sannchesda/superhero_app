@@ -73,24 +73,27 @@ class MyApp extends StatelessWidget {
           Locale('en'),
         ],
         initialBinding: InitialBinding(),
-        defaultTransition: Transition.rightToLeft,
-        transitionDuration: const Duration(milliseconds: 200),
         theme: ThemeData(
-          primarySwatch: AppColors.primaryMaterialColor,
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(fontSize: 16),
-          ),
-          textSelectionTheme: Theme.of(context).textSelectionTheme.copyWith(
-                selectionHandleColor: AppColors.secondary,
-                selectionColor: AppColors.secondary,
-              ),
+          useMaterial3: true,
+          // primarySwatch: AppColors.primaryMaterialColor,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
           fontFamily: AppFonts.primary,
-          hintColor: Colors.grey[400],
-          appBarTheme: AppBarTheme(
-            color: AppColors.primary,
-            elevation: 0,
-          ),
           iconTheme: IconThemeData(color: AppColors.icon),
+          appBarTheme: AppBarTheme(
+            centerTitle: true,
+          ),
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          // primarySwatch: AppColors.primaryMaterialColor,
+          colorScheme: ColorScheme.fromSeed(seedColor: AppColors.primary),
+          fontFamily: AppFonts.primary,
+          // iconTheme: IconThemeData(color: AppColors.icon),
+          appBarTheme: AppBarTheme(
+            color: AppColors.navyBlue,
+            titleTextStyle: AppBarTheme.of(context).titleTextStyle?.copyWith(color: Colors.white),
+          ),
+          scaffoldBackgroundColor: AppColors.navyBlue,
         ),
         themeMode: ThemeMode.light,
         home: const SplashScreen(),

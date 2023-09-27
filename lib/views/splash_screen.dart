@@ -28,6 +28,8 @@ class _SplashScreenState extends State<SplashScreen> {
         width: Get.width,
         height: Get.height,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               height: 100,
@@ -41,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> goToHome() async {
-    await Future.delayed(const Duration(seconds: 2));
+    await Future.delayed(const Duration(seconds: 1));
     Get.offAll(() => const HomePage());
   }
 }

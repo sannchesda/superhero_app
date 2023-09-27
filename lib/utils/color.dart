@@ -3,16 +3,20 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   /// Main Colors
-  static Color primary = hexToColor("#077F36");
+  static Color primary = hexToColor("#003060");
   static MaterialColor primaryMaterialColor = generateMaterialColor(primary);
-  static Color secondary = hexToColor("#8FBFFA");
-  static Color tertiary = hexToColor("#FFF200");
+  static Color secondary = hexToColor("#0074B7");
+  static Color tertiary = hexToColor("#60A3D9");
 
   /// Widget Colors
-  static Color icon = hexToColor("#8FBFFA");
-  static Color iconSecondary = hexToColor("#8FBFFA");
+  static Color icon = hexToColor("#0074B7");
+  static Color iconSecondary = hexToColor("#966E2A");
   static Color disableBorder = Colors.white.withOpacity(0.5);
 
+  static Color navyBlue = hexToColor("#003060");
+  static Color royalBlue = hexToColor("#0074B7");
+  static Color blueGrotto = hexToColor("#60A3D9");
+  static Color babyBlue = hexToColor("#BFD7ED");
 }
 
 Color hexToColor(String code) {
