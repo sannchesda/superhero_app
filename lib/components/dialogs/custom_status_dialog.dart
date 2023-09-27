@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boiler_plate/utils/color.dart';
-import 'package:flutter_boiler_plate/utils/constant.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:superhero_app/utils/color.dart';
+import 'package:superhero_app/utils/constant.dart';
 
 Future<void> showSuccessDialog({
   bool autoPop = true,

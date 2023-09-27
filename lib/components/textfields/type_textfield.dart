@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boiler_plate/utils/color.dart';
+import 'package:superhero_app/utils/color.dart';
 
 class TypeTextField extends StatefulWidget {
   const TypeTextField({

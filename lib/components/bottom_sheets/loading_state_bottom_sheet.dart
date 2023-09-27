@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boiler_plate/components/custom_shimmer.dart';
+import 'package:superhero_app/components/custom_shimmer.dart';
 
 class LoadingStateBottomSheet extends StatelessWidget {
   const LoadingStateBottomSheet({super.key});

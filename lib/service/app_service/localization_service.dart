@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:mission_report_app/controllers/remote_config_controller.dart';
-import 'package:mission_report_app/language/km_kh.dart';
-import 'package:mission_report_app/language/en_us.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:superhero_app/language/en_us.dart';
+import 'package:superhero_app/language/km_kh.dart';
 
 class LocalizationService extends Translations {
   // static const locale = Locale('en', 'US');
@@ -71,25 +70,5 @@ class LocalizationService extends Translations {
     } else {
       return 'km';
     }
-  }
-
-  void updateTranslationKey() {
-    final remoteConfigController = Get.find<RemoteConfigController>();
-    Map<String, Map<String, String>> newStringTranslation = {};
-
-    if (remoteConfigController.remoteConfigData.isEmpty ||
-        remoteConfigController.km == null ||
-        remoteConfigController.km?.isEmpty == true ||
-        !remoteConfigController.isUpdateLanguage) {
-      return;
-    }
-
-    newStringTranslation = {
-      "en_US": remoteConfigController.en ?? enUS,
-      "km_KH": remoteConfigController.km ?? kmKH,
-    };
-
-    Get.clearTranslations();
-    Get.addTranslations(newStringTranslation);
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boiler_plate/utils/color.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:superhero_app/utils/color.dart';
 
 class ShimmerWidget extends StatelessWidget {
   const ShimmerWidget({Key? key}) : super(key: key);

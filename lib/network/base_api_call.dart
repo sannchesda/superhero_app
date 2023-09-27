@@ -2,12 +2,10 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:mission_report_app/controllers/remote_config_controller.dart';
-import 'package:mission_report_app/controllers/user_controller.dart';
-import 'package:mission_report_app/models/success_response.dart';
-import 'package:mission_report_app/utils/functions.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:superhero_app/models/success_response.dart';
+import 'package:superhero_app/utils/functions.dart';
 
 Future<dynamic> callingApiMethod({
   required String url,
@@ -18,27 +16,12 @@ Future<dynamic> callingApiMethod({
   bool showError = true,
 }) async {
   String baseUrl = dotenv.env["BASE_URL"] ?? "";
-  try {
-    final remoteConfigController = Get.find<RemoteConfigController>();
-    if (remoteConfigController.isChangeBaseUrl) {
-      final remoteConfigBaseUrl = remoteConfigController.baseUrl ?? "";
-      if (remoteConfigBaseUrl.isNotEmpty) {
-        baseUrl = remoteConfigBaseUrl;
-      }
-    }
-  } catch (e) {
-    log("$e");
-  }
 
   final uri = Uri.parse("$baseUrl$url");
-
-  final userController = Get.find<UserController>();
-  final accessToken = userController.accessToken ?? "";
 
   final Map<String, String> headers = {
     "Accept": "application/json",
     "content-type": "application/json",
-    "Authorization": (useBasicAuth) ? basicAuth : "Bearer $accessToken",
   };
 
   if (kDebugMode) {
@@ -151,98 +134,6 @@ void processError(dynamic response, {bool showError = true}) {
     } catch (e) {
       log("processError: $e");
     }
-  }
-}
-
-Future<dynamic> postMultipart({
-  required String url,
-  Map<String, String>? body,
-  required String photoKeysName,
-  String? imagePath,
-  List<String>? imagePaths,
-  bool returnResponse = false,
-}) async {
-  String baseUrl = dotenv.env["BASE_URL"] ?? "";
-  final uri = Uri.parse("$baseUrl$url");
-
-  final userController = Get.find<UserController>();
-  final accessToken = userController.accessToken ?? "";
-
-  final Map<String, String> headers = {
-    "Authorization": "Bearer $accessToken",
-  };
-
-  if (kDebugMode) {
-    log("using multipartRequest");
-    log("url: $uri");
-    log("body: $body");
-    log("headers: $headers");
-  }
-
-  http.StreamedResponse? response;
-  try {
-    final request = http.MultipartRequest("POST", uri);
-
-    if (body != null) {
-      request.fields.addAll(body);
-    }
-
-    if (imagePath != null) {
-      request.files.add(
-        await http.MultipartFile.fromPath(
-          photoKeysName,
-          imagePath,
-        ),
-      );
-    } else if (imagePaths != null || imagePath?.isNotEmpty == true) {
-      for (String imagePath in imagePaths!) {
-        request.files.add(
-          await http.MultipartFile.fromPath(
-            photoKeysName,
-            imagePath,
-          ),
-        );
-      }
-    }
-    request.headers.addAll(headers);
-
-    response = await request.send();
-  } catch (e) {
-    log("postMultipartError: $e");
-  }
-
-  // Return unprocessed response
-  if (returnResponse) {
-    return response;
-  }
-
-  // Fail
-  if (response == null) {
-    log("response is null");
-    return null;
-  }
-
-  return processMultipartResponse(response);
-}
-
-dynamic processMultipartResponse(http.StreamedResponse response) async {
-  try {
-    if (response.statusCode == 200) {
-      final defaultResponse =
-          successResponseFromJson((await response.stream.bytesToString()));
-
-      log("statusCode: ${defaultResponse.statusCode}");
-
-      if (defaultResponse.statusCode != 200) {
-        processError(defaultResponse.errorString());
-        return;
-      }
-      return defaultResponse;
-    }
-    processError(response);
-    return null;
-  } catch (e) {
-    log("processResponseError: $e");
   }
 }
 

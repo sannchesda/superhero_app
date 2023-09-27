@@ -13,29 +13,6 @@ class AppColors {
   static Color iconSecondary = hexToColor("#8FBFFA");
   static Color disableBorder = Colors.white.withOpacity(0.5);
 
-  /// Colors
-  static Color cppPurple = hexToColor("#2E3192");
-  static MaterialColor cppPurpleMaterialColor =
-      generateMaterialColor(cppPurple);
-  static Color blue = hexToColor("#1e73be");
-  static Color lightBlue = hexToColor("#8FBFFA");
-  static Color yellow = hexToColor("#FFF200");
-  static final Color mptcBlue = hexToColor("#003d7c");
-  static final Color mptcYellow = hexToColor("#ef7c00");
-  static final Color eMeetingBlue = hexToColor("#0E3759");
-  static final Color borderColor = Colors.black.withOpacity(0.5);
-  static final Color grey = Colors.black.withOpacity(0.5);
-  static const Color lightGrey = Color.fromRGBO(46, 49, 146, 0.10);
-  static final Color red = hexToColor("#FF000080");
-  static final Color moeGreen = hexToColor("#077F36");
-  static MaterialColor moeGreenMaterialColor = generateMaterialColor(moeGreen);
-
-  // MOE Color Palettes
-  static const Color first = Color.fromRGBO(7, 127, 54, 0.5);
-  static const Color second = Color.fromRGBO(7, 219, 158, 0.86);
-  static const Color third = Color.fromRGBO(19, 242, 231, 0.95);
-  static const Color fourth = Color.fromRGBO(7, 173, 219, 0.86);
-  static const Color fifth = Color.fromRGBO(7, 133, 249, 0.98);
 }
 
 Color hexToColor(String code) {

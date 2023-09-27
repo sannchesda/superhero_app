@@ -1,8 +1,8 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:mission_report_app/utils/functions.dart';
 import 'package:get/get.dart';
+import 'package:superhero_app/utils/functions.dart';
 
 class InternetCheckController extends GetxController {
   ConnectivityResult connectionStatus = ConnectivityResult.wifi;

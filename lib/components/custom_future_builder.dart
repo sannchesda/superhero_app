@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_boiler_plate/components/custom_error_widget.dart';
 import 'package:get/get.dart';
+import 'package:superhero_app/components/custom_error_widget.dart';
 
 class CustomFutureBuilder<T> extends StatefulWidget {
   const CustomFutureBuilder({
