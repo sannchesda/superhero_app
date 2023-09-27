@@ -6,6 +6,7 @@ import 'package:superhero_app/components/scroll_wrapper.dart';
 import 'package:superhero_app/controllers/superhero_data_controller.dart';
 import 'package:superhero_app/models/superhero.dart';
 import 'package:superhero_app/utils/constant.dart';
+import 'package:superhero_app/utils/functions.dart';
 import 'package:superhero_app/views/superhero_detail.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,6 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   final superheroDataController = Get.put(SuperheroDataController());
+  final searchTextCon = TextEditingController();
 
   @override
   void initState() {
@@ -36,24 +38,61 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: const Text("Superheros"),
       ),
-      body: ScrollWrapper(
-        onRefresh: onRefresh,
-        child: Container(
-          padding: EdgeInsets.symmetric(horizontal: 8),
-          child: GetBuilder<SuperheroDataController>(
-            builder: (controller) {
-              final superheros = controller.superheros;
-              if (superheros == null) {
-                return loadingWidget;
-              }
-              if (superheros.isEmpty) {
-                return emptyWidget;
-              }
-
-              return listSuperheroWidget(superheros);
-            },
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8),
+            child: SearchBar(
+              hintText: "Ex: superman",
+              controller: searchTextCon,
+              trailing: [
+                IconButton(
+                  onPressed: () {
+                    focus(context);
+                    searchTextCon.text = "";
+                    superheroDataController.clearSearch();
+                  },
+                  icon: Icon(Icons.close),
+                ),
+              ],
+              onChanged: (value) {
+                superheroDataController.search(value);
+              },
+              elevation: MaterialStatePropertyAll(1),
+            ),
           ),
-        ),
+          Expanded(
+            child: ScrollWrapper(
+              onRefresh: onRefresh,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: GetBuilder<SuperheroDataController>(
+                  builder: (controller) {
+                    final superheros = controller.superheros;
+
+                    if (superheros == null) {
+                      return loadingWidget;
+                    }
+                    if (superheros.isEmpty) {
+                      return emptyWidget;
+                    }
+                    final filterSuperheros = controller.filterSuperheros;
+
+                    if (filterSuperheros != null &&
+                        filterSuperheros.isNotEmpty) {
+                      return listSuperheroWidget(filterSuperheros);
+                    }
+                    if (filterSuperheros != null && filterSuperheros.isEmpty) {
+                      return emptyWidget;
+                    }
+
+                    return listSuperheroWidget(superheros);
+                  },
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -89,7 +128,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Column(
       children: [
         SizedBox(height: 8),
-        ...List.generate(10, (index) {
+        ...List.generate(superheroes.length, (index) {
           final superhero = superheroes[index];
           return Card(
             // color: AppColors.babyBlue,
@@ -116,13 +155,10 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     borderRadius: BorderRadius.circular(
                       AppStaticValue.cardBorderRadius,
                     ),
-                    child: Hero(
-                      tag: superhero.images?.lg ?? UniqueKey(),
-                      child: ExtendedImage.network(
-                        superhero.images?.sm ?? "",
-                        fit: BoxFit.cover,
-                        cache: true,
-                      ),
+                    child: ExtendedImage.network(
+                      superhero.images?.sm ?? "",
+                      fit: BoxFit.cover,
+                      cache: true,
                     ),
                   ),
                 ),

@@ -50,32 +50,38 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
                             start: 68,
                             bottom: 16,
                           ),
-                          background: Hero(
-                            tag: superhero.images?.lg ?? UniqueKey(),
-                            child: ExtendedImage.network(
-                              superhero.images?.lg ?? "",
-                              fit: BoxFit.cover,
-                              cache: true,
-                            ),
+                          background: ExtendedImage.network(
+                            superhero.images?.lg ?? "",
+                            fit: BoxFit.cover,
+                            cache: true,
                           ),
                         ),
                         AnimatedOpacity(
                           duration: Duration(milliseconds: 100),
                           opacity: (top).floorToDouble() ==
-                              (MediaQuery.of(context).padding.top +
-                                  kToolbarHeight)
-                                  .floorToDouble()
+                                  (MediaQuery.of(context).padding.top +
+                                          kToolbarHeight)
+                                      .floorToDouble()
                               ? 1.0
                               : 0.0,
-                          child: Positioned(
-                            bottom: 4,
-                            right: 0,
-                            child: Align(
-                              alignment: Alignment.bottomRight,
-                              child: IconButton(
-                                onPressed: () {},
-                                splashColor: Colors.red,
-                                icon: Icon(Icons.ac_unit),
+                          child: Align(
+                            alignment: Alignment.bottomRight,
+                            child: Container(
+                              width: 48,
+                              height: 48,
+                              margin: EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: ExtendedNetworkImageProvider(
+                                    superhero.images?.sm ?? "",
+                                    cache: true,
+                                  ),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ),
@@ -97,11 +103,79 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
                 SizedBox(height: 36),
                 SizedBox(height: 8),
                 powerStateWidget(),
+                appearanceWidget(),
                 SizedBox(height: 8),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget appearanceWidget() {
+    return Card(
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          children: [
+            ListTile(
+              title: Text(
+                "Appearance",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0,
+                vertical: 0,
+              ),
+            ),
+            appearanceListItem(
+              title: "Gender",
+              trailingText: (superhero.appearance?.gender == "Female")
+                  ? "Female"
+                  : "Male",
+            ),
+            appearanceListItem(
+              title: "Race",
+              trailingText: superhero.appearance?.race ?? "",
+            ),
+            appearanceListItem(
+              title: "Gender",
+              trailingText: superhero.appearance?.heightString ?? "",
+            ),
+            appearanceListItem(
+              title: "Weight",
+              trailingText: superhero.appearance?.weightString ?? "",
+            ),
+            appearanceListItem(
+              title: "Eye Color",
+              trailingText: superhero.appearance?.eyeColor ?? "",
+            ),
+            appearanceListItem(
+              title: "Hair Color",
+              trailingText: superhero.appearance?.hairColor ?? "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget appearanceListItem({String title = "", String trailingText = ""}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(),
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Text(
+            trailingText,
+            style: Theme.of(context).textTheme.titleMedium,
+          )
+        ],
       ),
     );
   }

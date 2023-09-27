@@ -15,6 +15,30 @@ class Appearance {
     this.hairColor,
   });
 
+  String get heightString {
+    String result = "";
+    for (int i = 0; i < height!.length; i++) {
+      if (i == 0) {
+        result += height?[i] ?? "";
+      } else {
+        result += ", ${height?[i] ?? ""}";
+      }
+    }
+    return result;
+  }
+
+  String get weightString {
+    String result = "";
+    for (int i = 0; i < weight!.length; i++) {
+      if (i == 0) {
+        result += weight?[i] ?? "";
+      } else {
+        result += ", ${weight?[i] ?? ""}";
+      }
+    }
+    return result;
+  }
+
   factory Appearance.fromJson(Map<String, dynamic> json) => Appearance(
         gender: json["gender"],
         race: json["race"],
