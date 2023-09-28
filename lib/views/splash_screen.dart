@@ -34,7 +34,10 @@ class _SplashScreenState extends State<SplashScreen> {
             SizedBox(
               height: 100,
               width: 100,
-              child: Image.asset("${AssetDir.image}/flutter.jpg"),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.asset("${AssetDir.image}/app_icon.png"),
+              ),
             )
           ],
         ),
