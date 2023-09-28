@@ -5,10 +5,12 @@ class ScrollWrapper extends StatelessWidget {
     super.key,
     this.onRefresh,
     required this.child,
+    this.hasScrollBody = false,
   });
 
   final Future<void> Function()? onRefresh;
   final Widget child;
+  final bool hasScrollBody;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,7 @@ class ScrollWrapper extends StatelessWidget {
       physics: const AlwaysScrollableScrollPhysics(),
       slivers: [
         SliverFillRemaining(
-          hasScrollBody: false,
+          hasScrollBody: hasScrollBody,
           child: child,
         ),
       ],

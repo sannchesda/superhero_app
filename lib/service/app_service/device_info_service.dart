@@ -28,7 +28,7 @@ class DeviceInfoService {
       deviceName = "Android Device Name";
       model = androidInfo.model ?? "";
       deviceType = "Phone";
-    } else {
+    } else if (GetPlatform.isIOS) {
       final iosInfo = await deviceInfo.iosInfo;
       uuid = iosInfo.identifierForVendor ??
           '${iosInfo.systemName}${iosInfo.model}${iosInfo.name}';

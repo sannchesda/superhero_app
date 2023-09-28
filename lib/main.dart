@@ -91,12 +91,18 @@ class MyApp extends StatelessWidget {
           // iconTheme: IconThemeData(color: AppColors.icon),
           appBarTheme: AppBarTheme(
             color: AppColors.navyBlue,
-            titleTextStyle: AppBarTheme.of(context).titleTextStyle?.copyWith(color: Colors.white),
+            titleTextStyle: AppBarTheme.of(context)
+                .titleTextStyle
+                ?.copyWith(color: Colors.white),
           ),
           scaffoldBackgroundColor: AppColors.navyBlue,
         ),
         themeMode: ThemeMode.light,
         home: const SplashScreen(),
+        // initialRoute: "/",
+        // routes: {
+        //   "/": (context) => SplashScreen(),
+        // },
         builder: (context, child) {
           return MediaQuery(
             data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

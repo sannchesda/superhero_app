@@ -36,63 +36,73 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Superheros"),
+        title: const Text("Heroes & Villains"),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: SearchBar(
-              hintText: "Ex: superman",
-              controller: searchTextCon,
-              trailing: [
-                IconButton(
-                  onPressed: () {
-                    focus(context);
-                    searchTextCon.text = "";
-                    superheroDataController.clearSearch();
+      body: Container(
+        width: Get.width,
+        alignment: Alignment.center,
+        child: ConstrainedBox(
+          constraints: BoxConstraints(maxWidth: 600),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: SearchBar(
+                  hintText: "Ex: superman",
+                  controller: searchTextCon,
+                  trailing: [
+                    IconButton(
+                      onPressed: () {
+                        focus(context);
+                        searchTextCon.text = "";
+                        superheroDataController.clearSearch();
+                      },
+                      icon: Icon(Icons.close),
+                    ),
+                  ],
+                  onChanged: (value) {
+                    superheroDataController.search(value);
                   },
-                  icon: Icon(Icons.close),
-                ),
-              ],
-              onChanged: (value) {
-                superheroDataController.search(value);
-              },
-              elevation: MaterialStatePropertyAll(1),
-            ),
-          ),
-          Expanded(
-            child: ScrollWrapper(
-              onRefresh: onRefresh,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: GetBuilder<SuperheroDataController>(
-                  builder: (controller) {
-                    final superheros = controller.superheros;
-
-                    if (superheros == null) {
-                      return loadingWidget;
-                    }
-                    if (superheros.isEmpty) {
-                      return emptyWidget;
-                    }
-                    final filterSuperheros = controller.filterSuperheros;
-
-                    if (filterSuperheros != null &&
-                        filterSuperheros.isNotEmpty) {
-                      return listSuperheroWidget(filterSuperheros);
-                    }
-                    if (filterSuperheros != null && filterSuperheros.isEmpty) {
-                      return emptyWidget;
-                    }
-
-                    return listSuperheroWidget(superheros);
-                  },
+                  elevation: MaterialStatePropertyAll(1),
                 ),
               ),
-            ),
+              Expanded(
+                child: ScrollWrapper(
+                  hasScrollBody: true,
+                  onRefresh: onRefresh,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8),
+                    child: GetBuilder<SuperheroDataController>(
+                      builder: (controller) {
+                        final superheros = controller.superheros;
+
+                        if (superheros == null) {
+                          return loadingWidget;
+                        }
+                        if (superheros.isEmpty) {
+                          return emptyWidget;
+                        }
+                        final filterSuperheros = controller.filterSuperheros;
+
+                        if (filterSuperheros != null &&
+                            filterSuperheros.isNotEmpty) {
+                          return listSuperheroWidget(filterSuperheros);
+                        }
+                        if (filterSuperheros != null &&
+                            filterSuperheros.isEmpty) {
+                          return emptyWidget;
+                        }
+
+                        return listSuperheroWidget(superheros);
+                      },
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -128,50 +138,99 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     return Column(
       children: [
         SizedBox(height: 8),
-        ...List.generate(superheroes.length, (index) {
-          final superhero = superheroes[index];
-          return Card(
-            // color: AppColors.babyBlue,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(
-                AppStaticValue.cardBorderRadius,
-              ),
-            ),
-            elevation: 2,
-            child: InkWell(
-              onTap: () {
-                Get.to(() => SuperheroDetailPage(superhero: superhero));
-              },
-              child: ListTile(
-                minLeadingWidth: 0,
-                contentPadding: EdgeInsets.symmetric(
-                  vertical: 4,
-                  horizontal: 8,
+        // ...List.generate(superheroes.length, (index) {
+        //   final superhero = superheroes[index];
+        //   return Card(
+        //     // color: AppColors.babyBlue,
+        //     shape: RoundedRectangleBorder(
+        //       borderRadius: BorderRadius.circular(
+        //         AppStaticValue.cardBorderRadius,
+        //       ),
+        //     ),
+        //     elevation: 2,
+        //     child: InkWell(
+        //       onTap: () {
+        //         Get.to(() => SuperheroDetailPage(superhero: superhero));
+        //       },
+        //       child: ListTile(
+        //         minLeadingWidth: 0,
+        //         contentPadding: EdgeInsets.symmetric(
+        //           vertical: 4,
+        //           horizontal: 8,
+        //         ),
+        //         leading: SizedBox(
+        //           width: 48,
+        //           height: 48,
+        //           child: ClipRRect(
+        //             borderRadius: BorderRadius.circular(
+        //               AppStaticValue.cardBorderRadius,
+        //             ),
+        //             child: ExtendedImage.network(
+        //               superhero.images?.sm ?? "",
+        //               fit: BoxFit.cover,
+        //               cache: true,
+        //             ),
+        //           ),
+        //         ),
+        //         title: Text(
+        //           superhero.name ?? "",
+        //           style: TextStyle(
+        //             color: Colors.black,
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }),
+        Expanded(
+          child: ListView.builder(
+            itemCount: superheroes.length,
+            itemBuilder: (context, index) {
+              final superhero = superheroes[index];
+              return Card(
+                // color: AppColors.babyBlue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(
+                    AppStaticValue.cardBorderRadius,
+                  ),
                 ),
-                leading: SizedBox(
-                  width: 48,
-                  height: 48,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(
-                      AppStaticValue.cardBorderRadius,
+                elevation: 2,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(() => SuperheroDetailPage(superhero: superhero));
+                  },
+                  child: ListTile(
+                    minLeadingWidth: 0,
+                    contentPadding: EdgeInsets.symmetric(
+                      vertical: 4,
+                      horizontal: 8,
                     ),
-                    child: ExtendedImage.network(
-                      superhero.images?.sm ?? "",
-                      fit: BoxFit.cover,
-                      cache: true,
+                    leading: SizedBox(
+                      width: 48,
+                      height: 48,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(
+                          AppStaticValue.cardBorderRadius,
+                        ),
+                        child: ExtendedImage.network(
+                          superhero.images?.sm ?? "",
+                          fit: BoxFit.cover,
+                          cache: true,
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      superhero.name ?? "",
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
-                title: Text(
-                  superhero.name ?? "",
-                  style: TextStyle(
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-            ),
-          );
-        }),
+              );
+            },
+          ),
+        ),
         SizedBox(height: 8),
       ],
     );

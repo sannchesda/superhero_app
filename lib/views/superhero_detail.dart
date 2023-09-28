@@ -97,19 +97,24 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
         },
         body: SingleChildScrollView(
           child: Container(
+            width: Get.width,
+            alignment: Alignment.center,
             padding: EdgeInsets.symmetric(horizontal: 8),
-            child: Column(
-              children: [
-                ListTile(),
-                SizedBox(height: 36),
-                SizedBox(height: 8),
-                powerStateWidget(),
-                appearanceWidget(),
-                biographyWidget(),
-                workWidget(),
-                connectionsWidget(),
-                SizedBox(height: 8),
-              ],
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 600),
+              child: Column(
+                children: [
+                  ListTile(),
+                  SizedBox(height: 36),
+                  SizedBox(height: 8),
+                  powerStateWidget(),
+                  appearanceWidget(),
+                  biographyWidget(),
+                  workWidget(),
+                  connectionsWidget(),
+                  SizedBox(height: 8),
+                ],
+              ),
             ),
           ),
         ),
@@ -455,8 +460,7 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
                   '${progressValue.toStringAsFixed(2)}%',
                   style: TextStyle(
                     fontSize: 14,
-                    color:
-                        (progressValue <= 8.99) ? Colors.black : Colors.white,
+                    color: Colors.white,
                     height: 1,
                   ),
                 ),

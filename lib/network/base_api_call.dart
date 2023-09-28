@@ -19,10 +19,12 @@ Future<dynamic> callingApiMethod({
 
   final uri = Uri.parse("$baseUrl/$url");
 
-  final Map<String, String> headers = {
-    "Accept": "application/json",
-    "content-type": "application/json",
-  };
+  final Map<String, String> headers = (kIsWeb)
+      ? {}
+      : {
+          "Accept": "application/json",
+          "content-type": "application/json",
+        };
 
   if (kDebugMode) {
     log("url: $method $uri");
