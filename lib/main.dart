@@ -59,7 +59,7 @@ class MyApp extends StatelessWidget {
         }
       },
       child: GetMaterialApp(
-        title: "CPP Activity App",
+        title: "Heroes & Villains",
         locale: LocalizationService.locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
