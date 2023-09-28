@@ -134,3 +134,15 @@ void focus(BuildContext context) {
     FocusManager.instance.primaryFocus?.unfocus();
   }
 }
+
+String listStringToString(List<String> strings) {
+  String result = "";
+  for (int i = 0; i < strings.length; i++) {
+    if (i == 0) {
+      result += strings[i];
+    } else {
+      result += ", ${strings[i]}";
+    }
+  }
+  return result;
+}

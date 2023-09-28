@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:superhero_app/models/superhero.dart';
 import 'package:superhero_app/utils/color.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
@@ -104,11 +105,187 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
                 SizedBox(height: 8),
                 powerStateWidget(),
                 appearanceWidget(),
+                biographyWidget(),
+                workWidget(),
+                connectionsWidget(),
                 SizedBox(height: 8),
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget connectionsWidget() {
+    return Card(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              title: Text(
+                "⛓️ Connections",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0,
+                vertical: 0,
+              ),
+            ),
+            connectionsListItem(
+              title: "Group Affiliation",
+              trailingText: superhero.connections?.groupAffiliation ?? "",
+            ),
+            connectionsListItem(
+              title: "Relatives",
+              trailingText: superhero.connections?.relatives ?? "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget connectionsListItem({String title = "", String trailingText = ""}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Text(
+            trailingText,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget workWidget() {
+    return Card(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              title: Text(
+                "💼 Work",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0,
+                vertical: 0,
+              ),
+            ),
+            workListItem(
+              title: "Occupation",
+              trailingText: superhero.work?.occupation ?? "",
+            ),
+            workListItem(
+              title: "Base",
+              trailingText: superhero.work?.base ?? "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget workListItem({String title = "", String trailingText = ""}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Text(
+            trailingText,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget biographyWidget() {
+    return Card(
+      child: Container(
+        width: Get.width,
+        padding: EdgeInsets.symmetric(horizontal: 8),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              title: Text(
+                "🧑‍ Biography",
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 0,
+                vertical: 0,
+              ),
+            ),
+            biographyListItem(
+              title: "Fullname",
+              trailingText: superhero.biography?.fullName ?? "",
+            ),
+            biographyListItem(
+              title: "Alter Egos",
+              trailingText: superhero.biography?.alterEgos ?? "",
+            ),
+            biographyListItem(
+              title: "Alias",
+              trailingText: superhero.biography?.aliasesString ?? "",
+            ),
+            biographyListItem(
+              title: "Place birth",
+              trailingText: superhero.biography?.placeOfBirth ?? "",
+            ),
+            biographyListItem(
+              title: "First Appearance",
+              trailingText: superhero.biography?.firstAppearance ?? "",
+            ),
+            biographyListItem(
+              title: "Publisher",
+              trailingText: superhero.biography?.publisher ?? "",
+            ),
+            biographyListItem(
+              title: "Alignment",
+              trailingText: superhero.biography?.alignment ?? "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget biographyListItem({String title = "", String trailingText = ""}) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(),
+      title: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          Text(
+            trailingText,
+            style: Theme.of(context).textTheme.titleSmall,
+          ),
+        ],
       ),
     );
   }
@@ -121,7 +298,7 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
           children: [
             ListTile(
               title: Text(
-                "Appearance",
+                "👁 Appearance",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               contentPadding: EdgeInsets.symmetric(
@@ -188,7 +365,7 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
           children: [
             ListTile(
               title: Text(
-                "Power stats",
+                "✊ Power stats",
                 style: Theme.of(context).textTheme.titleLarge,
               ),
               contentPadding: EdgeInsets.symmetric(
@@ -207,8 +384,7 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
             ),
             buildProgressBar(
               title: "💨 Speed",
-              progressValue:
-                  superhero.powerstats?.speed?.toDouble() ?? 0.0,
+              progressValue: superhero.powerstats?.speed?.toDouble() ?? 0.0,
             ),
             buildProgressBar(
               title: "🧱 Durability",
@@ -217,13 +393,11 @@ class _SuperheroDetailPageState extends State<SuperheroDetailPage> {
             ),
             buildProgressBar(
               title: "⚡ Power",
-              progressValue:
-                  superhero.powerstats?.power?.toDouble() ?? 0.0,
+              progressValue: superhero.powerstats?.power?.toDouble() ?? 0.0,
             ),
             buildProgressBar(
               title: "👊 Combat",
-              progressValue:
-                  superhero.powerstats?.combat?.toDouble() ?? 0.0,
+              progressValue: superhero.powerstats?.combat?.toDouble() ?? 0.0,
             ),
           ],
         ),

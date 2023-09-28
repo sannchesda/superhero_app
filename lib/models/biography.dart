@@ -1,3 +1,5 @@
+import 'package:superhero_app/utils/functions.dart';
+
 class Biography {
   String? fullName;
   String? alterEgos;
@@ -16,6 +18,10 @@ class Biography {
     this.publisher,
     this.alignment,
   });
+
+  String get aliasesString {
+    return listStringToString(aliases ?? []);
+  }
 
   factory Biography.fromJson(Map<String, dynamic> json) => Biography(
         fullName: json["fullName"],
